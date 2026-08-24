@@ -1,0 +1,17 @@
+cffi==2.1.1
+colorama==0.4.6
+iniconfig==2.3.0
+numpy==2.4.6
+packaging==26.3
+pluggy==1.6.0
+pycparser==3.0
+Pygments==2.21.0
+pyqtgraph==0.14.0
+PySide6==6.11.2
+PySide6_Addons==6.11.2
+PySide6_Essentials==6.11.2
+pytest==9.1.1
+ruff==0.16.4
+scipy==1.17.1
+shiboken6==6.11.2
+sounddevice==0.5.6

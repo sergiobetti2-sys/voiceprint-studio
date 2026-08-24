@@ -1,0 +1,66 @@
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build and packaging output
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# Real audio and biometric artifacts
+*.wav
+*.flac
+*.mp3
+*.ogg
+*.m4a
+*.aac
+*.npy
+*.pt
+
+# Explicit exception for future authorized synthetic fixtures
+!tests/fixtures/synthetic/*.wav
+!tests/fixtures/synthetic/*.npy
+
+# Models and model caches
+models/
+pretrained_models/
+huggingface/
+.cache/huggingface/
+*.ckpt
+*.pth
+*.safetensors
+
+# Voiceprint Studio local data
+projects/
+recordings/
+exports/
+*.vpsproj/
+*.voiceprint/
+audio_diagnostic.wav
+
+# Temporary files
+*.tmp
+*.temp
+~$*

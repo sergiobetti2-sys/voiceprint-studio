@@ -1,0 +1,35 @@
+# Architettura
+
+Voiceprint Studio adotta una struttura modulare. Il PoC `v0.0.1` è volutamente
+isolato in `poc/`; i moduli definitivi cresceranno sotto `src/voiceprint_studio/`.
+
+## Moduli previsti
+
+| Modulo | Responsabilità |
+|---|---|
+| `app` | Coordinamento dei casi d'uso e dei worker |
+| `audio` | Dispositivi, acquisizione, riproduzione e importazione |
+| `signal` | dBFS, FFT, resampling, mono e qualità |
+| `embedding` | Interfaccia backend e implementazione ECAPA |
+| `enrollment` | Campioni, aggregazione e completezza |
+| `verification` | Similarità e risultato della verifica |
+| `storage` | Salvataggio, riapertura e migrazioni |
+| `export` | Formati portabili, manifest e checksum |
+| `ui` | Finestre e componenti grafici privi di logica biometrica |
+| `resources` | Frasi guidate e configurazioni linguistiche |
+
+## Vincoli del tempo reale
+
+Il callback audio non esegue FFT, scrittura su disco, inferenza o operazioni
+bloccanti. Copia i campioni in una coda limitata. Il thread dell'interfaccia
+consuma la coda a intervalli regolari; elaborazioni più pesanti useranno worker
+separati.
+
+## Flusso previsto
+
+1. Acquisizione o importazione audio.
+2. Normalizzazione del formato e controllo qualità.
+3. Estrazione di un embedding per campione accettato.
+4. Aggregazione e normalizzazione L2.
+5. Salvataggio del progetto modificabile oppure esportazione di uno snapshot.
+6. Verifica con una frase nuova e soglia definita dall'applicazione chiamante.
