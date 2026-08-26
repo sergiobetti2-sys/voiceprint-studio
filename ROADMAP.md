@@ -16,18 +16,18 @@ sono promesse di consegna: ogni milestone avanza solo dopo i relativi test.
 - [x] Test matematici: 6 test superati, compresa FFT a 1 kHz.
 - [x] Ruff senza errori sui file del PoC.
 
-## v0.0.2 — ECAPA Feasibility
+## v0.0.2 — ECAPA Feasibility — completata il 25 agosto 2026
 
-- [ ] Installare una combinazione compatibile di PyTorch, torchaudio e SpeechBrain.
-- [ ] Scaricare in modo controllato `speechbrain/spkrec-ecapa-voxceleb`.
-- [ ] Registrare la revisione esatta del modello.
-- [ ] Convertire audio mono al formato richiesto: 16 kHz.
-- [ ] Estrarre un embedding ECAPA di 192 valori finiti.
-- [ ] Verificare ripetibilità sullo stesso file.
-- [ ] Confrontare stessa voce e voce differente tramite similarità coseno.
-- [ ] Misurare tempo e memoria su CPU.
-- [ ] Ripetere l'avvio senza rete usando la cache locale.
-- [ ] Provare precocemente un pacchetto PyInstaller `onedir`.
+- [x] Combinazione compatibile: PyTorch 2.11, torchaudio 2.11 e SpeechBrain 1.1.
+- [x] Installazione controllata di `speechbrain/spkrec-ecapa-voxceleb`.
+- [x] Revisione esatta del modello registrata e fissata nel PoC.
+- [x] Conversione mono e resampling da 44,1 kHz a 16 kHz.
+- [x] Estrazione di embedding ECAPA con 192 valori finiti.
+- [x] Ripetibilità deterministica sullo stesso segnale e sullo stesso file.
+- [x] Separazione qualitativa fra stessa voce e voce differente.
+- [x] Tempo e memoria misurati su CPU.
+- [x] Installazione e avvio verificati offline dalla cache locale.
+- [x] Pacchetto PyInstaller `onedir` avviato con modello esterno.
 
 ## v0.0.3 — Core headless
 

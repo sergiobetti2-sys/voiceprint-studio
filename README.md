@@ -15,7 +15,7 @@ registrazioni o impronte vocali reali.
 
 ## Stato del progetto
 
-Versione corrente: **0.0.1 — Audio Diagnostics PoC**.
+Versione corrente: **0.0.2 — ECAPA Feasibility**.
 
 Il primo proof of concept ha validato su Windows:
 
@@ -28,8 +28,21 @@ Il primo proof of concept ha validato su Windows:
 - 0 overflow e 0 drop nel test hardware;
 - sei test automatici per dBFS, clipping e FFT a 1 kHz.
 
-L'interfaccia completa del prodotto non è ancora in sviluppo. Il prossimo
-checkpoint è la fattibilità ECAPA (`v0.0.2`).
+Il secondo proof of concept ha inoltre verificato:
+
+- caricamento offline di `speechbrain/spkrec-ecapa-voxceleb`;
+- revisione del modello fissata a
+  `0f99f2d0ebe89ac095bcc5903c4dd8f72b367286`;
+- conversione da audio mono a 44,1 kHz verso 16 kHz;
+- embedding ECAPA da 192 valori finiti e normalizzati L2;
+- ripetibilità deterministica sullo stesso audio;
+- separazione qualitativa fra stessa voce e voce differente;
+- inferenza CPU e primo pacchetto PyInstaller `onedir` funzionanti.
+
+La similarità coseno non è una percentuale di riconoscimento. Una futura soglia
+di verifica dovrà essere calibrata su un insieme di dati adeguato e resterà
+esterna all'impronta. L'interfaccia completa del prodotto non è ancora in
+sviluppo; il prossimo checkpoint è il core headless (`v0.0.3`).
 
 ## Obiettivo della versione 0.1.0
 
@@ -59,7 +72,9 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.lock
 ```
 
-## Avvio del PoC
+## Avvio dei PoC
+
+Diagnostica audio:
 
 ```bat
 python poc\audio_diagnostics.py
@@ -67,6 +82,43 @@ python poc\audio_diagnostics.py
 
 Le registrazioni diagnostiche vengono salvate in
 `%TEMP%\VoiceprintStudioPoC`, fuori dal repository.
+
+Installazione controllata del modello ECAPA nella cartella dati locale:
+
+```bat
+python poc\ecapa_feasibility.py --install-model
+```
+
+Test sintetico offline dopo l'installazione:
+
+```bat
+python poc\ecapa_feasibility.py
+```
+
+Controllo di ripetibilità su un file locale:
+
+```bat
+python poc\ecapa_feasibility.py --audio "C:\percorso\campione.wav"
+```
+
+Confronto sperimentale fra due file:
+
+```bat
+python poc\ecapa_feasibility.py --compare "primo.wav" "secondo.wav"
+```
+
+I file reali devono restare fuori dal repository. Modello e revisione vengono
+stampati a ogni esecuzione per rendere il risultato identificabile.
+
+## Packaging sperimentale
+
+Il PoC ECAPA può essere assemblato in modalità `onedir` usando il file `.spec`
+versionato. Il modello non viene incluso nel pacchetto:
+
+```bat
+python -m PyInstaller --noconfirm --clean --distpath dist ^
+  --workpath build\pyinstaller packaging\voiceprint-studio-ecapa-poc.spec
+```
 
 ## Controlli di qualità
 

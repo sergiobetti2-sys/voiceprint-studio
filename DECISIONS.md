@@ -68,3 +68,44 @@ dipendenze e del modello restano separate e saranno documentate prima della rele
 
 **Decisione:** il PoC salva il WAV in `%TEMP%\VoiceprintStudioPoC`, mai nella
 cartella Git. Questo riduce il rischio di pubblicazione accidentale di voce reale.
+
+## ADR-013 — Modello fissato e autonomo da EVA
+
+**Decisione:** il backend usa `speechbrain/spkrec-ecapa-voxceleb` alla revisione
+`0f99f2d0ebe89ac095bcc5903c4dd8f72b367286`. Il download è gestito tramite
+Hugging Face Hub e i file necessari vengono copiati in
+`%LOCALAPPDATA%\VoiceprintStudio\models`, fuori dal repository. Voiceprint Studio
+non legge modelli, profili o embedding appartenenti a EVA.
+
+**Motivazione:** una revisione immutabile rende gli esperimenti riproducibili. La
+copia evita i privilegi richiesti dai collegamenti simbolici su Windows e rende
+il prodotto indipendente da altri progetti. Il modello resta esterno anche nel
+pacchetto PyInstaller.
+
+## ADR-014 — Dipendenze del PoC ECAPA
+
+**Decisione:** il PoC introduce PyTorch, torchaudio, SpeechBrain e Hugging Face
+Hub per l'inferenza; SoundFile per la lettura robusta degli audio; psutil per la
+misura diagnostica della memoria; PyInstaller come strumento di sviluppo.
+
+**Impatto:** lo stack ML aumenta sensibilmente download, ambiente virtuale e
+pacchetto Windows. Il primo `onedir` verificato misura circa 498 MiB; la riduzione
+è rimandata a una fase di ottimizzazione, dopo aver preservato la correttezza.
+psutil e PyInstaller non fanno parte della logica biometrica.
+
+**Alternative considerate:** SciPy da solo copre bene il WAV PCM ma non tutti i
+formati supportati da libsndfile; ONNX potrebbe ridurre il runtime futuro, ma
+aggiungerebbe ora un secondo percorso d'inferenza non ancora validato. Le licenze
+dirette e l'eccezione di distribuzione PyInstaller sono inventariate in
+`THIRD_PARTY_NOTICES.md`.
+
+## ADR-015 — Similarità non percentuale
+
+**Decisione:** il confronto restituisce una similarità coseno nell'intervallo
+`[-1, 1]`, limitata numericamente per evitare valori appena superiori a 1 dovuti
+all'arrotondamento `float32`. Lo score non viene mostrato come probabilità o
+percentuale di riconoscimento.
+
+**Motivazione:** trasformare direttamente lo score in percentuale sarebbe
+fuorviante. La decisione stessa voce/voce differente richiede una soglia calibrata
+su dati rappresentativi e tale soglia resta esterna all'impronta.

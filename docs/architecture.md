@@ -1,7 +1,8 @@
 # Architettura
 
-Voiceprint Studio adotta una struttura modulare. Il PoC `v0.0.1` è volutamente
-isolato in `poc/`; i moduli definitivi cresceranno sotto `src/voiceprint_studio/`.
+Voiceprint Studio adotta una struttura modulare. I PoC `v0.0.1` e `v0.0.2` sono
+volutamente isolati in `poc/`; i moduli definitivi cresceranno sotto
+`src/voiceprint_studio/`.
 
 ## Moduli previsti
 
@@ -33,3 +34,20 @@ separati.
 4. Aggregazione e normalizzazione L2.
 5. Salvataggio del progetto modificabile oppure esportazione di uno snapshot.
 6. Verifica con una frase nuova e soglia definita dall'applicazione chiamante.
+
+## Backend ECAPA validato
+
+Il PoC `v0.0.2` implementa il percorso tecnico:
+
+1. lettura del file audio come `float32`;
+2. downmix mono quando necessario;
+3. resampling polifase a 16 kHz;
+4. estrazione ECAPA su CPU;
+5. verifica di 192 valori finiti;
+6. normalizzazione L2;
+7. confronto tramite similarità coseno limitata a `[-1, 1]`.
+
+Il modello e la revisione sono dichiarati nel codice. I pesi vivono nella
+cartella dati locale dell'utente e non nel repository o nel pacchetto Windows.
+Le future soglie di decisione saranno configurazione del modulo `verification`,
+non proprietà dell'embedding esportato.
