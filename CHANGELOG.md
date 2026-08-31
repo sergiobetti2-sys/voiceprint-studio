@@ -6,9 +6,23 @@ Tutte le modifiche rilevanti saranno documentate in questo file. Il formato segu
 
 ## [Unreleased]
 
+### Changed
+
+- Confermata la `v0.0.2` come proof of concept pubblico Apache 2.0.
+- Stabilito che il prodotto prosegue dalla `v0.0.3` in un repository privato e
+  con licenza proprietaria.
+- Ridefinito il repository pubblico come vetrina tecnica senza pubblicazione del
+  nuovo codice sorgente proprietario.
+- Dettagliati attività e criteri di uscita del core headless `v0.0.3`.
+- Integrati nella roadmap l'astrazione del backend embedding, la separazione
+  della pipeline, la matrice dei casi limite e uno smoke test CI del packaging.
+- Confermato per la prima release il perimetro enrollment e verifica 1:1,
+  escludendo per ora identificazione, TTS, voice cloning e voice conversion.
+
 ### Planned
 
-- Core headless per importazione WAV, qualità, enrollment ed esportazione.
+- Core headless proprietario per importazione WAV, qualità, enrollment,
+  salvataggio, esportazione e verifica.
 
 ## [0.0.2] - 2026-08-25
 

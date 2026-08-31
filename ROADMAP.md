@@ -29,15 +29,69 @@ sono promesse di consegna: ogni milestone avanza solo dopo i relativi test.
 - [x] Installazione e avvio verificati offline dalla cache locale.
 - [x] Pacchetto PyInstaller `onedir` avviato con modello esterno.
 
-## v0.0.3 — Core headless
+## Strategia di sviluppo dalla v0.0.3
 
-- [ ] Moduli audio e signal indipendenti dalla UI.
-- [ ] Importazione WAV e resampling.
-- [ ] Controlli qualità versionati.
-- [ ] Enrollment, aggregazione e completezza `completeness-v1`.
-- [ ] Formato di progetto versionato.
-- [ ] Esportazione con manifest e checksum.
-- [ ] Verifica con soglia esterna all'impronta.
+La `v0.0.2` resta il proof of concept pubblico distribuito con Apache License
+2.0. Il prodotto completo prosegue dalla `v0.0.3` in un repository privato e
+con licenza proprietaria. Il repository pubblico rimane una vetrina tecnica:
+potrà contenere documentazione, avanzamento generale, immagini e dimostrazioni,
+ma non il nuovo codice sorgente proprietario.
+
+## v0.0.3 — Core headless proprietario
+
+### Transizione e protezione del prodotto
+
+- [ ] Creare il repository privato destinato allo sviluppo del prodotto.
+- [ ] Importare la baseline tecnica verificata nella `v0.0.2`.
+- [ ] Applicare al nuovo sviluppo una licenza proprietaria, distinguendola
+      esplicitamente dal PoC `v0.0.2` già distribuito con Apache 2.0.
+- [ ] Mantenere nel repository pubblico una roadmap generale senza pubblicare
+      il nuovo codice sorgente.
+- [ ] Verificare le licenze di dipendenze, modello e runtime prima di qualsiasi
+      distribuzione commerciale.
+
+### Core applicativo senza interfaccia grafica
+
+- [ ] Portare la logica stabile fuori da `poc/` nel package di produzione
+      `src/voiceprint_studio/`.
+- [ ] Organizzare il core in moduli indipendenti per audio, preprocessing,
+      qualità, backend embedding, enrollment, progetto, esportazione,
+      similarità e decisione di verifica.
+- [ ] Definire un'interfaccia `SpeakerEmbeddingBackend` affinché ECAPA sia il
+      primo backend intercambiabile e non diventi l'architettura del prodotto.
+- [ ] Importare WAV mono o stereo con validazione, conversione mono e
+      resampling a 16 kHz.
+- [ ] Introdurre controlli qualità versionati per durata utile, livello,
+      clipping e utilizzabilità del campione.
+- [ ] Gestire una sessione di enrollment con aggiunta, elenco ed eliminazione
+      dei campioni.
+- [ ] Aggregare gli embedding e normalizzare l'impronta risultante.
+- [ ] Calcolare la completezza con la formula versionata `completeness-v1`,
+      distinguendola sempre dalla probabilità di riconoscimento.
+- [ ] Definire un formato di progetto versionato, salvabile e riapribile.
+- [ ] Esportare `.npy`, `.pt`, `.json` e `manifest.json` con checksum SHA-256.
+- [ ] Includere nel manifest almeno schema, modello, revisione, dimensione,
+      sample rate, preprocessing, normalizzazione, aggregazione e timestamp.
+- [ ] Conservare la soglia di verifica fuori dall'impronta esportata.
+- [ ] Coprire il core con test deterministici per stereo/mono, sample rate non
+      standard, file vuoto o corrotto, NaN/Inf, audio troppo corto, silenzio,
+      clipping e incompatibilità di dimensione o versione dell'embedding.
+- [ ] Aggiungere alla CI un smoke test del core e un job Windows manuale o di
+      milestone per verificare la build PyInstaller senza appesantire ogni push.
+- [ ] Mantenere Ruff, pytest e controlli privacy come condizioni obbligatorie.
+
+### Criteri di uscita
+
+- [ ] Un test end-to-end headless importa più WAV, crea un enrollment, salva e
+      riapre il progetto senza perdita di dati.
+- [ ] L'esportazione produce file coerenti, manifest versionato e checksum
+      verificabili.
+- [ ] La verifica confronta una nuova registrazione con l'impronta usando una
+      soglia fornita dal chiamante.
+- [ ] Il backend ECAPA può essere sostituito nei test da un backend fittizio
+      senza modificare enrollment, esportazione o verifica.
+- [ ] Nessun audio reale, embedding reale, modello o credenziale entra nel
+      repository o nei test.
 
 ## v0.0.4 — Desktop alpha
 
