@@ -44,6 +44,22 @@ di verifica dovrà essere calibrata su un insieme di dati adeguato e resterà
 esterna all'impronta. L'interfaccia completa del prodotto non è ancora in
 sviluppo; il prossimo checkpoint è il core headless (`v0.0.3`).
 
+## Strategia di distribuzione
+
+La versione pubblica `v0.0.2` è un proof of concept rilasciato con Apache License
+2.0. Lo sviluppo del prodotto completo prosegue dalla `v0.0.3` in un repository
+privato e con licenza proprietaria.
+
+Questo repository rimane la vetrina tecnica pubblica del progetto. Potrà essere
+aggiornato con documentazione, avanzamento generale, immagini e dimostrazioni,
+ma non con il nuovo codice sorgente proprietario. La futura disponibilità di
+eseguibili, licenze personali, licenze aziendali o integrazioni SDK sarà definita
+prima della distribuzione commerciale.
+
+La prima release resta focalizzata sulla creazione dell'impronta e sulla verifica
+1:1. Identificazione 1:N, sintesi vocale, voice cloning e voice conversion non
+fanno parte della roadmap corrente e richiederanno una valutazione separata.
+
 ## Obiettivo della versione 0.1.0
 
 - creazione di un progetto di enrollment;
@@ -138,5 +154,8 @@ python -m pytest -v
 
 ## Licenza
 
-Codice distribuito secondo Apache License 2.0. Le dipendenze e i modelli
-mantengono le rispettive licenze; vedere [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Il codice pubblico fino alla versione `v0.0.2` è distribuito secondo Apache
+License 2.0. Il nuovo codice del prodotto sviluppato dalla `v0.0.3` non è incluso
+in questo repository e sarà soggetto a licenza proprietaria. Le dipendenze e i
+modelli mantengono le rispettive licenze; vedere
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

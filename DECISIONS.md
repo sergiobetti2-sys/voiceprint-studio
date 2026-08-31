@@ -109,3 +109,48 @@ percentuale di riconoscimento.
 **Motivazione:** trasformare direttamente lo score in percentuale sarebbe
 fuorviante. La decisione stessa voce/voce differente richiede una soglia calibrata
 su dati rappresentativi e tale soglia resta esterna all'impronta.
+
+## ADR-016 — Sviluppo proprietario dalla v0.0.3
+
+**Decisione:** la `v0.0.2` rimane il proof of concept pubblico distribuito con
+Apache License 2.0. Dalla `v0.0.3`, il codice del prodotto viene sviluppato in un
+repository privato e con licenza proprietaria. Il repository pubblico resta una
+vetrina tecnica e può ricevere documentazione, avanzamento generale, immagini e
+dimostrazioni, ma non il nuovo codice sorgente proprietario.
+
+**Motivazione:** il progetto deve essere visibile come portfolio e come possibile
+prodotto commerciale, senza concedere automaticamente a terzi l'uso gratuito del
+nuovo lavoro. La separazione fra vetrina pubblica e sviluppo privato evita
+ambiguità e mantiene verificabile la storia tecnica già pubblicata.
+
+**Impatto:** i diritti già concessi sulla `v0.0.2` non vengono revocati. Prima di
+distribuire eseguibili o concedere licenze commerciali saranno verificati i
+termini delle dipendenze, del modello, del runtime e la disciplina privacy delle
+impronte vocali. Il modello commerciale definitivo ed eventuali condizioni d'uso
+saranno decisi prima della prima distribuzione a terzi.
+
+**Sostituisce parzialmente:** ADR-011 per il codice sviluppato dopo la `v0.0.2`.
+ADR-011 continua ad applicarsi alla versione pubblica `v0.0.2`.
+
+## ADR-017 — Backend di speaker embedding intercambiabile
+
+**Decisione:** il core dipende da un contratto `SpeakerEmbeddingBackend`, non
+direttamente da SpeechBrain o da ECAPA. Preprocessing, estrazione, aggregazione,
+similarità e decisione di verifica rimangono responsabilità separate. ECAPA è il
+primo adattatore concreto del contratto.
+
+**Motivazione:** il modello validato nella `v0.0.2` non deve diventare un vincolo
+architetturale permanente. L'interfaccia permette test senza caricare il modello,
+sostituzioni future del backend e manifest che descrivono esplicitamente quale
+implementazione ha prodotto l'impronta.
+
+## ADR-018 — Confine funzionale della prima release
+
+**Decisione:** fino alla `v0.1.0` Voiceprint Studio resta focalizzato su
+enrollment e verifica 1:1. Identificazione 1:N, sintesi vocale, voice cloning e
+voice conversion non entrano nella roadmap corrente.
+
+**Motivazione:** queste funzioni richiedono modelli, metriche, rischi privacy,
+misure anti-abuso e posizionamento di prodotto differenti. Potranno essere
+valutate successivamente come moduli o prodotti separati, dopo aver completato e
+validato il nucleo di impronta vocale.
